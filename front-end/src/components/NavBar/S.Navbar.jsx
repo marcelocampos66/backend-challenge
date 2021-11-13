@@ -26,6 +26,7 @@ class Styled {
       background-color: white;
       color: black;
       border: 1px solid black;
+      cursor: pointer;
     }
   `;
 

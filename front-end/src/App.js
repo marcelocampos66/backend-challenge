@@ -5,6 +5,8 @@ import Home from './pages/Home';
 function App() {
   return (
     <Switch>
+      <Route path="/register" component={ Home } />
+      <Route path="/users" component={ Home } />
       <Route exact path="/" component={ Home } />
     </Switch>
   );
