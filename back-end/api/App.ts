@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import errorMiddleware from '../middlewares/errorMiddleware';
 
 class App {
   public app: express.Application;
@@ -25,7 +26,7 @@ class App {
   }
 
   private handleErrors() {
-
+    this.app.use(errorMiddleware);
   }
 
   public startServer() {
@@ -34,6 +35,6 @@ class App {
     });
   }
 
-}
+};
 
 export default App;
