@@ -27,8 +27,8 @@ class Styled {
   Button = styled.button`
     border-radius: 5px;
     height: 4vh;
-    background-color: black;
-    color: white;
+    background-color: ${(props) => props.disabled ? '#808080' : '#000000'};
+    color: ${(props) => props.disabled ? '#000000' : '#ffffff'};
     width: 150px;
     &:hover {
       background-color: white;

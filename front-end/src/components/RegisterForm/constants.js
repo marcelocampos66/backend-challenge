@@ -11,7 +11,7 @@ export const inputs = [
     name: 'telephone',
     labelText: 'Telefone:',
     type: 'number',
-    placeholder: 'Digite o telefone do Usuario',
+    placeholder: 'Apenas numeros 31 999999999',
   },
   {
     id: 'password',

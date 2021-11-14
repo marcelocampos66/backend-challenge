@@ -1,21 +1,51 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppContext from '../../context/AppContext';
 import { inputs } from './constants';
+import Api from '../../services/Api';
 import Styled from './S.RegisterForm';
 
+const initialState = {
+  name: '',
+  telephone: '',
+  password: '',
+};
+
 const RegisterForm = () => {
+  const [disable, setDisable] = useState(true);
   const { user, setUser } = useContext(AppContext);
 
-  const handleChange = ({ target: { name, value } }) => {
-    setUser({
-      ...user,
-      [name]: value,
-    });
+  const verifyNewUserCredentials = () => {
+    const { name, telephone, password } = user;
+    const minNameLength = 4;
+    const minPasswordLength = 6;
+    const telephoneLength = 11;
+    if (name.length < minNameLength
+      || password.length < minPasswordLength
+      || telephoneLength !== telephone.length) {
+      setDisable(true);
+      return;
+    }
+    setDisable(false);
   }
 
-  const handleClick = () => {
-    
+  const handleChange = ({ target: { name, value } }) => {
+    setUser({ ...user, [name]: value });
   }
+
+  const handleClick = async () => {
+    const { name, telephone, password } = user;
+    const newUser = {
+      msisdn: `+55${telephone}`,
+      name,
+      password,
+    };
+    await Api.registerUser(newUser);
+    setUser(initialState);
+  }
+
+  useEffect(() => {
+    verifyNewUserCredentials();
+  });
 
   return (
     <Styled.Main>
@@ -35,6 +65,7 @@ const RegisterForm = () => {
       }
       <Styled.Button
         type="button"
+        disabled={ disable }
         onClick={ handleClick }
       >
         Registrar!
