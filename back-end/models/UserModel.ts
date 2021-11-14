@@ -17,6 +17,11 @@ class UserModel extends Connection {
       .then((db) => db.collection('users').findOne({ msisdn }));
   }
 
+  public async getAllUsers() {
+    return this.connection()
+      .then((db) => db.collection('users').find().toArray());
+  }
+
 }
 
 export default UserModel;

@@ -22,6 +22,11 @@ export class UserService {
     return user;
   }
 
+  public async getAllUsers() {
+    const users = await this.model.getAllUsers();
+    return users;
+  }
+
 }
 
 export default new UserService(new UserModel(), new Helpers());

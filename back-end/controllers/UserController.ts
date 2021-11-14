@@ -19,6 +19,7 @@ class UserController extends Middlewares {
       this.verifyUserExists,
       this.register,
     ]);
+    this.router.get('/', this.getAllUsers);
   }
 
   private register = async (
@@ -29,6 +30,15 @@ class UserController extends Middlewares {
     const { body: { msisdn, name, password } } = req;
     const result = await this.service.register({ msisdn, name, password });
     return res.status(201).json(result);
+  }
+
+  private getAllUsers = async (
+    _req: Request,
+    res: Response,
+    _next: NextFunction
+  ) => {
+    const users = await this.service.getAllUsers();
+    return res.status(200).json(users);
   }
 
 }
