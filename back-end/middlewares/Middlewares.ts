@@ -1,11 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import Helpers from '../helpers/Helpers';
+import UserModel from '../models/UserModel';
 
 class Middlewares {
   private helpers: Helpers;
+  private model: UserModel;
 
   constructor() {
     this.helpers = new Helpers();
+    this.model = new UserModel();
   }
 
   public verifyUserInfos = async (
@@ -24,6 +27,19 @@ class Middlewares {
     }
     return next();
   };
+
+  public verifyUserExists = async (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const { body: { msisdn } } = req;
+    const userExists = await this.model.getUserByMsisdn(msisdn);
+    if (userExists) {
+      return next({ status: 409, message: 'User already exists' });
+    }
+    return next();
+  }
 
 };
 

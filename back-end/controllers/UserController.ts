@@ -16,6 +16,7 @@ class UserController extends Middlewares {
   private initializeRoutes() {
     this.router.post('/', [
       this.verifyUserInfos,
+      this.verifyUserExists,
       this.register,
     ]);
   }
@@ -26,8 +27,8 @@ class UserController extends Middlewares {
     _next: NextFunction
   ) => {
     const { body: { msisdn, name, password } } = req;
-    await this.service.register({ msisdn, name, password });
-    return res.status(201).json({ message: 'Ok!' });
+    const result = await this.service.register({ msisdn, name, password });
+    return res.status(201).json(result);
   }
 
 }

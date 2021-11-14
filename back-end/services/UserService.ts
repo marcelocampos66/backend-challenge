@@ -1,9 +1,12 @@
 import Helpers from "../helpers/Helpers";
+import UserModel from "../models/UserModel";
 
 export class UserService {
+  private model: UserModel;
   private helpers: Helpers;
 
-  constructor(helpers: Helpers) {
+  constructor(model: UserModel, helpers: Helpers) {
+    this.model = model;
     this.helpers = helpers;
   }
 
@@ -15,10 +18,10 @@ export class UserService {
       access_level: 'free',
       password: this.helpers.hashPassword(password),
     };
-    // manda pra model
-    // console.log(user);
+    await this.model.register(user);
+    return user;
   }
 
 }
 
-export default new UserService(new Helpers());
+export default new UserService(new UserModel(), new Helpers());
