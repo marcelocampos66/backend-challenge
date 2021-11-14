@@ -15,7 +15,7 @@ export const inputs = [
   },
   {
     id: 'password',
-    name: 'telephone',
+    name: 'password',
     labelText: 'Password:',
     type: 'password',
     placeholder: 'Digite o password',
