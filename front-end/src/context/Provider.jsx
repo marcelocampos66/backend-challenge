@@ -10,10 +10,13 @@ const initialState = {
 
 const Provider = ({ children }) => {
   const [user, setUser] = useState(initialState);
+  const [users, setUsers] = useState([]);
 
   const contextValue = {
     user,
     setUser,
+    users,
+    setUsers,
   };
 
   return (
