@@ -1,12 +1,15 @@
-import express, { Request, Response, NextFunction, Router } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import Middlewares from '../middlewares/Middlewares';
+import { UserService } from '../services/UserService';
 
 class UserController extends Middlewares {
   public router: express.Router;
+  private service: UserService;
 
-  constructor() {
+  constructor(service: UserService) {
     super();
     this.router = express.Router();
+    this.service = service;
     this.initializeRoutes();
   }
 
@@ -23,6 +26,7 @@ class UserController extends Middlewares {
     _next: NextFunction
   ) => {
     const { body: { msisdn, name, password } } = req;
+    await this.service.register({ msisdn, name, password });
     return res.status(201).json({ message: 'Ok!' });
   }
 
