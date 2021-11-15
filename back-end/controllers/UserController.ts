@@ -41,6 +41,22 @@ class UserController extends Middlewares {
     return res.status(200).json(users);
   }
 
+  private upgrade = async (
+    _req: Request,
+    res: Response,
+    _next: NextFunction
+  ) => {
+
+  }
+
+  private downgrade = async (
+    _req: Request,
+    res: Response,
+    _next: NextFunction
+  ) => {
+    
+  }
+
 }
 
 export default UserController;

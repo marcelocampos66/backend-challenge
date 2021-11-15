@@ -10,3 +10,11 @@ interface INewUser {
   access_level: string;
   password: string;
 }
+
+interface INewUserMLearn {
+  msisdn: string;
+  name: string;
+  access_level: string;
+  password: string;
+  external_id: string;
+}
