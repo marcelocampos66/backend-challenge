@@ -1,0 +1,15 @@
+1 – Desafio Lógico
+O desafio lógico foi realizado em Python e se encontra na raiz do projeto, no arquivo desafio_logico.py. Para rodá-lo basta executar seguinte comando no terminal, estando na raiz do projeto:
+
+    python3 ./desafio_logico.py
+
+2-Desafio Aplicação
+Back-end
+
+	O back-end foi feito em NodeJs, TypeScript e Express. Como primeiro passo, devemos realizar a criação do arquivo .env na raiz da pasta back-end (existe um arquivo .env.example para guiar a criação das variáveis de ambiente). Após a criação das variáveis de ambiente, é necessário inicializar o banco de dados NoSQL MongoDB, e ainda na raiz do back-end, basta executar os comandos ‘ npm install ’ (para instalar as dependências) e ’ npm run dev ’ (para a inicialização da API em modo de desenvolvimento),  e a API já vai estar funcionando. Existe também, a opção de executar os comandos ‘ npm run compile ’ (para a tradução de todo o código para JavaScript) e ‘ npm start ’ para inicialização da API.
+
+
+Front-end
+
+	O front-end foi feito em React e Styled-components (para uma leve estilização :) ). Como primeiro passo, devemos realizar a criação do arquivo .env na raiz da pasta front-end (existe um arquivo .env.example para guiar a criação das variáveis de ambiente). Para inicializar o projeto, primeiro devemos ir até a pasta front-end, e depois basta executar no terminal os comandos ‘ npm install ’ e na sequencia ‘ npm start ’ para inicializar o app.
+
