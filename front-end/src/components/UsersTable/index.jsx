@@ -11,6 +11,11 @@ const UsersTable = () => {
     setUsers(usersList);
   }
 
+  const handleClick = async ({ target: { value: id, name: action } }) => {
+    await Api.updateAccessLevel(id, action);
+    await getUsersList();
+  }
+
   useEffect(() => {
     getUsersList();
   }, []);
@@ -40,6 +45,9 @@ const UsersTable = () => {
                   <Styled.DivButton>
                     <Styled.Button
                       type="button"
+                      name="upgrade"
+                      value={ user._id }
+                      onClick={ handleClick }
                     >
                       Upgrade
                     </Styled.Button>
@@ -49,6 +57,9 @@ const UsersTable = () => {
                   <Styled.DivButton>
                     <Styled.Button
                       type="button"
+                      name="downgrade"
+                      value={ user._id }
+                      onClick={ handleClick }
                     >
                       Downgrade
                     </Styled.Button>

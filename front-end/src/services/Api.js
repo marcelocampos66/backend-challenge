@@ -35,6 +35,19 @@ class Api {
       .catch((err) => err);
   };
 
+  async updateAccessLevel(id, action) {
+    const endpoint = `${this.url}/users/${id}/${action}`;
+    return fetch(endpoint, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': this.content,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => err);
+  }
+
 }
 
 export default new Api(API_URL, PORT);
