@@ -16,16 +16,20 @@ class UserController extends Middlewares {
   private initializeRoutes() {
     this.router.post('/', [
       this.verifyUserInfos,
-      this.verifyUserExists,
+      this.verifyUserAlreadyExists,
       this.register,
     ]);
     this.router.get('/', this.getAllUsers);
+    this.router.put('/:id/:action', [
+      this.verifyUserExists,
+      this.updateAccessLevel,
+    ]);
   }
 
   private register = async (
     req: Request,
     res: Response,
-    _next: NextFunction
+    _next: NextFunction,
   ) => {
     const { body: { msisdn, name, password } } = req;
     const result = await this.service.register({ msisdn, name, password });
@@ -35,26 +39,23 @@ class UserController extends Middlewares {
   private getAllUsers = async (
     _req: Request,
     res: Response,
-    _next: NextFunction
+    _next: NextFunction,
   ) => {
     const users = await this.service.getAllUsers();
     return res.status(200).json(users);
   }
 
-  private upgrade = async (
-    _req: Request,
+  private updateAccessLevel = async (
+    req: Request,
     res: Response,
-    _next: NextFunction
+    next: NextFunction,
   ) => {
-
-  }
-
-  private downgrade = async (
-    _req: Request,
-    res: Response,
-    _next: NextFunction
-  ) => {
-    
+    const { params: { id, action } } = req;
+    if (action !== 'upgrade' && action !== 'downgrade') {
+      return next({ status: 400, message: 'Incorrect action' });
+    }
+    const result = await this.service.updateAccessLevel(id, action);
+    return res.status(200).json(result);
   }
 
 }

@@ -40,19 +40,10 @@ class ApiMLearn {
       .catch(this.handleResponse);
   }
 
-  public async upgrade(id: string) {
+  public async put(id: string, action: Action) {
     return axios({
       method: 'PUT',
-      url: `${this.host}/integrator/${this.serviceId}/users/${id}/upgrade`,
-    })
-      .then(this.handleResponse)
-      .catch(this.handleResponse);
-  }
-
-  public async downgrade(id: string) {
-    return axios({
-      method: 'PUT',
-      url: `${this.host}/integrator/${this.serviceId}/users/${id}/downgrade`,
+      url: `${this.host}/integrator/${this.serviceId}/users/${id}/${action}`,
     })
       .then(this.handleResponse)
       .catch(this.handleResponse);

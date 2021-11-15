@@ -16,6 +16,24 @@ class Helpers {
     }).validate(infos)
   );
 
+  public getNewAcessLevel(actualAcess: Access, action: Action) {
+    const levels: ILevels = {
+      free: {
+        upgrade: 'pro',
+        downgrade: 'free',
+      },
+      pro: {
+        upgrade: 'premium',
+        downgrade: 'free',
+      },
+      premium: {
+        upgrade: 'premium',
+        downgrade: 'pro',
+      }
+    };
+    return levels[actualAcess][action];
+  }
+
 }
 
 export default Helpers;

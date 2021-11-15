@@ -43,6 +43,15 @@ export class UserService {
     return users;
   }
 
+  public async updateAccessLevel(id: string, action: Action) {
+    const user = await this.model.getUserById(id);
+    const actualAcess: Access = user?.access_level;
+    const newAccessLevel = this.helpers.getNewAcessLevel(actualAcess, action) as Access;
+    await this.model.updateAccessLevel(id, newAccessLevel);
+    const updatedUser = await this.model.getUserById(id);
+    return updatedUser;
+  }
+
 }
 
 export default new UserService(new UserModel(), new Helpers());

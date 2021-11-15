@@ -28,7 +28,7 @@ class Middlewares {
     return next();
   };
 
-  public verifyUserExists = async (
+  public verifyUserAlreadyExists = async (
     req: Request,
     _res: Response,
     next: NextFunction,
@@ -37,6 +37,19 @@ class Middlewares {
     const userExists = await this.model.getUserByMsisdn(msisdn);
     if (userExists) {
       return next({ status: 409, message: 'User already exists' });
+    }
+    return next();
+  }
+
+  public verifyUserExists = async (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const { params: { id } } = req;
+    const userExists = await this.model.getUserById(id);
+    if (!userExists) {
+      return next({ status: 404, message: 'User dont exists' });
     }
     return next();
   }
