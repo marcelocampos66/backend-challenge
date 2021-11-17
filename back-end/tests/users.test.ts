@@ -307,3 +307,271 @@ describe('GET /users', () => {
   });
 
 });
+
+describe('PUT /:id/:action', () => {
+
+  describe('Faz o upgrade do Access Level do Usuario', () => {
+    const dbName = process.env.MONGO_DB || 'mlearn_challenge';
+    let response: ChaiHttp.Response;
+    let DBServer: MongoMemoryServer;
+    let connectionMock;
+
+    before(async () => {
+      DBServer = await MongoMemoryServer.create();
+      const URLMock = DBServer.getUri();
+      connectionMock = await MongoClient.connect(URLMock);
+
+      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+
+      await connectionMock.db(dbName)
+        .collection('users')
+        .insertOne(mocks.userRegistry);
+
+      response = await chai.request(
+        new App(8080, controllers).getExpressInstance()
+      )
+        .put('/users/6192b8891ba9d668ecf36ec7/upgrade')
+    });
+
+    after(async () => {
+      await DBServer.stop();
+      sinon.restore();
+    });
+
+    it('retorna o código de status 200', () => {
+      expect(response).to.have.status(200);
+    });
+
+    it('retorna um array no body', () => {
+      expect(response.body).to.be.a('object');
+    });
+
+    it('o objeto possui a propriedade "msisdn"', () => {
+      expect(response.body).to.have.property('msisdn');
+    });
+
+    it('o objeto possui a propriedade "name"', () => {
+      expect(response.body).to.have.property('name');
+    });
+
+    it('o objeto possui a propriedade "password"', () => {
+      expect(response.body).to.have.property('password');
+    });
+
+    it('o objeto possui a propriedade "_id"', () => {
+      expect(response.body).to.have.property('_id');
+    });
+
+    it('o objeto possui a propriedade "mLearnResponse"', () => {
+      expect(response.body).to.have.property('mLearnResponse');
+    });
+
+    it('o objeto possui a propriedade "access_level"', () => {
+      expect(response.body).to.have.property('access_level');
+    });
+
+    it('a propriedade access_level possui o valor "premium"', () => {
+      expect(response.body.access_level).to.be.equal('premium');
+    });
+
+  });
+
+  describe('Faz o downgrade do Access Level do Usuario', () => {
+    const dbName = process.env.MONGO_DB || 'mlearn_challenge';
+    let response: ChaiHttp.Response;
+    let DBServer: MongoMemoryServer;
+    let connectionMock;
+
+    before(async () => {
+      DBServer = await MongoMemoryServer.create();
+      const URLMock = DBServer.getUri();
+      connectionMock = await MongoClient.connect(URLMock);
+
+      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+
+      await connectionMock.db(dbName)
+        .collection('users')
+        .insertOne(mocks.userRegistry);
+
+      response = await chai.request(
+        new App(8080, controllers).getExpressInstance()
+      )
+        .put('/users/6192b8891ba9d668ecf36ec7/downgrade')
+    });
+
+    after(async () => {
+      await DBServer.stop();
+      sinon.restore();
+    });
+
+    it('retorna o código de status 200', () => {
+      expect(response).to.have.status(200);
+    });
+
+    it('retorna um array no body', () => {
+      expect(response.body).to.be.a('object');
+    });
+
+    it('o objeto possui a propriedade "msisdn"', () => {
+      expect(response.body).to.have.property('msisdn');
+    });
+
+    it('o objeto possui a propriedade "name"', () => {
+      expect(response.body).to.have.property('name');
+    });
+
+    it('o objeto possui a propriedade "password"', () => {
+      expect(response.body).to.have.property('password');
+    });
+
+    it('o objeto possui a propriedade "_id"', () => {
+      expect(response.body).to.have.property('_id');
+    });
+
+    it('o objeto possui a propriedade "mLearnResponse"', () => {
+      expect(response.body).to.have.property('mLearnResponse');
+    });
+
+    it('o objeto possui a propriedade "access_level"', () => {
+      expect(response.body).to.have.property('access_level');
+    });
+
+    it('a propriedade access_level possui o valor "free"', () => {
+      expect(response.body.access_level).to.be.equal('free');
+    });
+
+  });
+
+  describe('Ao tentar fazer upgrade do Access Level ja sendo premium nada acontece', () => {
+    const dbName = process.env.MONGO_DB || 'mlearn_challenge';
+    let response: ChaiHttp.Response;
+    let DBServer: MongoMemoryServer;
+    let connectionMock;
+
+    before(async () => {
+      DBServer = await MongoMemoryServer.create();
+      const URLMock = DBServer.getUri();
+      connectionMock = await MongoClient.connect(URLMock);
+
+      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+
+      await connectionMock.db(dbName)
+        .collection('users')
+        .insertOne(mocks.userRegistryPremium);
+
+      response = await chai.request(
+        new App(8080, controllers).getExpressInstance()
+      )
+        .put('/users/6192b8891ba9d668ecf36ec7/upgrade')
+    });
+
+    after(async () => {
+      await DBServer.stop();
+      sinon.restore();
+    });
+
+    it('retorna o código de status 200', () => {
+      expect(response).to.have.status(200);
+    });
+
+    it('retorna um array no body', () => {
+      expect(response.body).to.be.a('object');
+    });
+
+    it('o objeto possui a propriedade "msisdn"', () => {
+      expect(response.body).to.have.property('msisdn');
+    });
+
+    it('o objeto possui a propriedade "name"', () => {
+      expect(response.body).to.have.property('name');
+    });
+
+    it('o objeto possui a propriedade "password"', () => {
+      expect(response.body).to.have.property('password');
+    });
+
+    it('o objeto possui a propriedade "_id"', () => {
+      expect(response.body).to.have.property('_id');
+    });
+
+    it('o objeto possui a propriedade "mLearnResponse"', () => {
+      expect(response.body).to.have.property('mLearnResponse');
+    });
+
+    it('o objeto possui a propriedade "access_level"', () => {
+      expect(response.body).to.have.property('access_level');
+    });
+
+    it('a propriedade access_level possui o valor "premium"', () => {
+      expect(response.body.access_level).to.be.equal('premium');
+    });
+
+  });
+
+  describe('Ao tentar fazer downgrade do Access Level ja sendo free nada acontece', () => {
+    const dbName = process.env.MONGO_DB || 'mlearn_challenge';
+    let response: ChaiHttp.Response;
+    let DBServer: MongoMemoryServer;
+    let connectionMock;
+
+    before(async () => {
+      DBServer = await MongoMemoryServer.create();
+      const URLMock = DBServer.getUri();
+      connectionMock = await MongoClient.connect(URLMock);
+
+      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+
+      await connectionMock.db(dbName)
+        .collection('users')
+        .insertOne(mocks.userRegistryFree);
+
+      response = await chai.request(
+        new App(8080, controllers).getExpressInstance()
+      )
+        .put('/users/6192b8891ba9d668ecf36ec7/downgrade')
+    });
+
+    after(async () => {
+      await DBServer.stop();
+      sinon.restore();
+    });
+
+    it('retorna o código de status 200', () => {
+      expect(response).to.have.status(200);
+    });
+
+    it('retorna um array no body', () => {
+      expect(response.body).to.be.a('object');
+    });
+
+    it('o objeto possui a propriedade "msisdn"', () => {
+      expect(response.body).to.have.property('msisdn');
+    });
+
+    it('o objeto possui a propriedade "name"', () => {
+      expect(response.body).to.have.property('name');
+    });
+
+    it('o objeto possui a propriedade "password"', () => {
+      expect(response.body).to.have.property('password');
+    });
+
+    it('o objeto possui a propriedade "_id"', () => {
+      expect(response.body).to.have.property('_id');
+    });
+
+    it('o objeto possui a propriedade "mLearnResponse"', () => {
+      expect(response.body).to.have.property('mLearnResponse');
+    });
+
+    it('o objeto possui a propriedade "access_level"', () => {
+      expect(response.body).to.have.property('access_level');
+    });
+
+    it('a propriedade access_level possui o valor "free"', () => {
+      expect(response.body.access_level).to.be.equal('free');
+    });
+
+  });
+
+});
