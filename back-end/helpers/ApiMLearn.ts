@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { Action, INewUserMLearn } from '../Type';
 
 class ApiMLearn {
   private host: string;

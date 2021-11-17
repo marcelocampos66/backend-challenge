@@ -1,6 +1,7 @@
 import Helpers from "../helpers/Helpers";
 import UserModel from "../models/UserModel";
 import ApiMLearn from '../helpers/ApiMLearn';
+import { INewUserMLearn, IUser, INewUser, Action, Access } from "../Type";
 
 const TOKEN = process.env.MLEARN_TOKEN || '';
 const SERVICE_ID = process.env.MLEARN_SERVICE_ID || '';

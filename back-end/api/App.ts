@@ -38,6 +38,10 @@ class App {
     });
   }
 
+  public getExpressInstance() {
+    return this.app;
+  }
+
 };
 
 export default App;

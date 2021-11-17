@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import joi from 'joi';
 import md5 from 'md5';
+import { IUser, Access, Action, ILevels } from '../Type';
 
 class Helpers {
 
