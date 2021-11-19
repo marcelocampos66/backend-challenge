@@ -1,5 +1,6 @@
 import Connection from "./Connection";
 import { ObjectId } from 'mongodb';
+import { INewUser, Access } from "../Type";
 
 class UserModel extends Connection {
 
